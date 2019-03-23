@@ -12,11 +12,15 @@
   :author "Wojciech S. Gac"
   :license "GPLv3"
   :depends-on ("cl-ppcre"
-               "alexandria")
+               "alexandria"
+               "clx"
+               "usocket"
+               "ironclad")
   :components ((:module "src"
                 :components
                 ((:file "cl-swiss")
-		 (:file "machine-independent-graphics"))))
+		 (:file "machine-independent-graphics")
+                 (:file "gopher"))))
   :description "An effort to build a personal library of useful Common
   Lisp utilities (Swiss Army knife)"
   :long-description
