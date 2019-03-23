@@ -15,10 +15,12 @@
                "alexandria"
                "clx"
                "usocket"
-               "ironclad")
+               "ironclad"
+               "circular-streams")
   :components ((:module "src"
                 :components
-                ((:file "cl-swiss")
+                ((:file "util")
+                 (:file "cl-swiss")
 		 (:file "machine-independent-graphics")
                  (:file "gopher"))))
   :description "An effort to build a personal library of useful Common
