@@ -22,8 +22,61 @@
 			 :x 0
 			 :y 0
 			 :width x-size
-			 :height y-size))
+			 :height y-size
+			 :background :parent-relative
+			 ))
     (change-property *plot-window*
 		     :wm_name title
 		     :string 8)
+    (map-window *plot-window*)
+    (display-finish-output display)
     *plot-window*))
+
+(defun plot-fill-rect (x y xsize ysize pattern)
+  (declare (ignorable x y xsize ysize pattern)))
+
+(defun plot-size-rect (x y xsize ysize val)
+  (declare (ignorable x y xsize ysize val)))
+
+(defun clear-plot ())
+
+(defun pen-width (nibs)
+  (declare (ignorable nibs)))
+
+(defun plot-frame-rect (x y xsize ysize)
+  (declare (ignorable x y xsize ysize)))
+
+(defun plot-line (x1 y1 x2 y2)
+  (declare (ignorable x1 y1 x2 y2)))
+
+(defun show-plot ())
+
+(defun plot-string (x y str &optional (size 10))
+  (declare (ignorable x y str size)))
+
+(defun plot-string-bold (x y str &optional (size 12))
+  (declare (ignorable x y str size)))
+
+(defun plot-string-italic (x y str)
+  (declare (ignorable x y str)))
+
+(defun plot-mouse-down ())
+
+#+nil
+(defun test ()
+  (show-plot)
+  (clear-plot)
+  (dotimes (i 6)
+    (plot-fill-rect
+     (* i 9)
+     (* i 9)
+     8 8
+     i)
+    (plot-frame-rect (* i 9) (* I 9) 8 8))
+  (dotimes (i 50)
+    (plot-size-rect
+     (+ 160 (random 200)) (random 100) (random 20) (random 20) (random 5)))
+  (dotimes (i 4)
+    (plot-string (* i 10) (+ 150 (* i 22)) "Mark's plot utilities ...."))
+  (plot-string-bold 20 260 "This is a test... of BOLD")
+  (plot-string-italic 20 280 "This is a test ... of ITALIC"))
