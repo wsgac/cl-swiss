@@ -11,6 +11,8 @@
 
 (defparameter *plot-window* nil)
 
+;; Some CLX examples: http://www.cawtech.demon.co.uk/clx/simple/examples.html
+
 (defun init-plot (&key (title "Plot Window") (x-size 500) (y-size 500))
   (let* ((display (open-default-display))
 	 (screen (car (display-roots display)))
