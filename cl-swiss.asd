@@ -16,13 +16,20 @@
                "clx"
                "usocket"
                "ironclad"
-               "circular-streams")
+               "flexi-streams"
+               "circular-streams"
+               "inferior-shell"
+               "bordeaux-threads")
   :components ((:module "src"
                 :components
-                ((:file "util")
+                ((:module "onlisp"
+			  :components
+			  ((:file "util")))
+		 (:file "util")
                  (:file "cl-swiss")
 		 (:file "machine-independent-graphics")
-                 (:file "gopher"))))
+                 (:file "gopher")
+                 (:file "sailfish"))))
   :description "An effort to build a personal library of useful Common
   Lisp utilities (Swiss Army knife)"
   :long-description
