@@ -19,7 +19,8 @@
                "flexi-streams"
                "circular-streams"
                "inferior-shell"
-               "bordeaux-threads")
+               "bordeaux-threads"
+               "chanl")
   :components ((:module "src"
                 :components
                 ((:module "onlisp"

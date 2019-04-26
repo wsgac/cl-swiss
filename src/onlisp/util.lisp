@@ -252,3 +252,57 @@ SUCC-FN."
                  (intern (make-string 1
                                       :initial-element c)))
         (symbol-name sym)))
+
+;; Chapter 5
+
+(defvar *!equivs* (make-hash-table)
+  "Hash table for storing destructive counterparts of functions.")
+
+(defun ! (fn)
+  "Retrieve destructive counterpart of function FN. Requires previous
+association to be established by DEF!."
+  (or (gethash fn *!equivs*) fn))
+
+(defun def! (fn fn!)
+  "Establish FN! as a destructive counterpart of FN."
+  (setf (gethash fn *!equivs*) fn!))
+
+(defun memoize (fn)
+  (let ((cache (make-hash-table :test #'equal)))
+    #'(lambda (&rest args)
+	(multiple-value-bind (val win) (gethash args cache)
+	  (if win
+	      val
+	      (setf (gethash args cache)
+		    (apply fn args)))))))
+
+(defun fif (if then &optional else)
+  "Functional IF. Return a function, whose argument gets passed
+  through an IF-like expression, applying IF, THEN and ELSE to that
+  argument."
+  #'(lambda (x)
+      (if (funcall if x)
+	  (funcall then x)
+	  (if else (funcall else x)))))
+
+;; Paul Graham's version
+#+nil
+(defun fint (fn &rest fns)
+  (if (null fns)
+      fn
+      (let ((chain (apply #'fint fns)))
+	#'(lambda (x)
+	    (and (funcall fn x) (funcall chain x))))))
+
+;; My version using EVERY
+(defun fintersection (&rest fns)
+  "Functional intersection. Return a predicate function checking if
+  all the functions FN and FNS evaluate to T on its argument."
+  #'(lambda (x)
+      (every #'(lambda (f) (funcall f x)) fns)))
+
+(defun funion (&rest fns)
+  "Functional intersection. Return a predicate function checking if
+  all the functions FN and FNS evaluate to T on its argument."
+  #'(lambda (x)
+      (some #'(lambda (f) (funcall f x)) fns)))
