@@ -306,3 +306,48 @@ association to be established by DEF!."
   all the functions FN and FNS evaluate to T on its argument."
   #'(lambda (x)
       (some #'(lambda (f) (funcall f x)) fns)))
+
+(defun lrec (rec &optional base)
+  ""
+  (labels ((self (lst)
+             (if (null lst)
+                 (if (functionp base)
+                     (funcall base)
+                     base)
+                 (funcall rec (car lst)
+                          #'(lambda ()
+                              (self (cdr lst)))))))
+    #'self))
+
+(setf (fdefinition 'list-recurser) #'lrec)
+
+(defun ttrav (rec &optional (base #'identity))
+  ""
+  (labels ((self (tree)
+             (if (atom tree)
+                 (if (functionp base)
+                     (funcall base tree)
+                     base)
+                 (funcall rec (self (car tree))
+                          (if (cdr tree)
+                              (self (cdr tree)))))))
+    #'self))
+
+(setf (fdefinition 'tree-traverser) #'ttrav)
+
+(defun trec (rec &optional (base #'identity))
+  (labels
+      ((self (tree)
+         (if (atom tree)
+             (if (functionp base)
+                 (funcall base tree)
+                 base)
+             (funcall rec tree
+                      #'(lambda ()
+                          (self (car tree)))
+                      #'(lambda ()
+                          (if (cdr tree)
+                              (self (cdr tree))))))))
+    #'self))
+
+(setf (fdefinition 'tree-recurser) #'trec)
